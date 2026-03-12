@@ -12,7 +12,7 @@ I'd love to hear your thoughts! If you have suggestions or find any bugs:
 
 ## Skills
 
-There are three skills in this project. Each one lives in its own folder and contains a `SKILL.md` file.
+There are three skills in this project. Each one lives in its own folder and includes a `SKILL.md` file, optional `references/` material, and `agents/openai.yaml` metadata for agents that support it.
 
 ### 1. taste-skill
 The main design skill. Teaches the AI how to write good-looking frontend code from scratch. Covers layout, typography, colors, spacing, motion, and overall visual quality.
@@ -25,14 +25,15 @@ Stops the AI from being lazy. Prevents placeholder comments, skipped code blocks
 
 ## How to Use
 
-1. Copy the `SKILL.md` file from the skill folder you need into your project.
-2. Tell your AI to read and follow it. In most editors you can just reference it directly (e.g. `@SKILL.md` in Cursor).
+1. Copy the entire skill folder you need into your project, not just `SKILL.md`.
+2. Keep the folder structure intact so the AI can read any referenced files.
+3. Tell your AI to read and follow the skill. In editors that support direct references, point at the skill folder or `SKILL.md`.
 
 That's it. The AI reads the file and follows the rules.
 
 ## Settings (taste-skill only)
 
-The taste skill has three settings at the top of the file. Change these numbers (1-10) depending on what you're building:
+The taste skill uses three design dials. Mention them in your prompt when you want to push the output in a specific direction:
 
 **DESIGN_VARIANCE** — How experimental the layout is.
 - 1-3: Clean, centered, standard grids.
@@ -48,6 +49,8 @@ The taste skill has three settings at the top of the file. Change these numbers 
 - 1-3: Big and spacious. One element at a time. Luxury feel.
 - 4-7: Normal spacing. Like a typical app or website.
 - 8-10: Dense and compact. Dashboards, data-heavy interfaces.
+
+Example: "Use `DESIGN_VARIANCE 7`, `MOTION_INTENSITY 3`, and `VISUAL_DENSITY 5` for a polished SaaS landing page."
 
 ## Examples
 

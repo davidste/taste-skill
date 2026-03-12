@@ -1,49 +1,44 @@
 ---
-name: full-output-enforcement
-description: Overrides default LLM truncation behavior. Enforces complete code generation, bans placeholder patterns, and handles token-limit splits cleanly. Apply to any task requiring exhaustive, unabridged output.
+name: output-skill
+description: Force complete, placeholder-free deliverables. Use when the task requires full files, exhaustive sections, or multi-part outputs and the model might otherwise truncate, summarize, or leave placeholders.
 ---
 
-# Full-Output Enforcement
+# Output Skill
 
 ## Baseline
 
-Treat every task as production-critical. A partial output is a broken output. Do not optimize for brevity — optimize for completeness. If the user asks for a full file, deliver the full file. If the user asks for 5 components, deliver 5 components. No exceptions.
+Treat missing deliverables as failures. Match the requested scope exactly.
 
-## Banned Output Patterns
+## Hard failures
 
-The following patterns are hard failures. Never produce them:
+Never produce:
 
-**In code blocks:** `// ...`, `// rest of code`, `// implement here`, `// TODO`, `/* ... */`, `// similar to above`, `// continue pattern`, `// add more as needed`, bare `...` standing in for omitted code
+- Placeholder code such as `// ...`, `/* ... */`, `TODO`, `rest of code`, or `implement here`
+- Prose shortcuts such as `for brevity`, `the rest follows the same pattern`, or `let me know if you want me to continue`
+- Skeletons, partial lists, or one example standing in for multiple requested deliverables
 
-**In prose:** "Let me know if you want me to continue", "I can provide more details if needed", "for brevity", "the rest follows the same pattern", "similarly for the remaining", "and so on" (when replacing actual content), "I'll leave that as an exercise"
+## Execution process
 
-**Structural shortcuts:** Outputting a skeleton when the request was for a full implementation. Showing the first and last section while skipping the middle. Replacing repeated logic with one example and a description. Describing what code should do instead of writing it.
+1. Count the requested deliverables before drafting.
+2. Produce every deliverable completely.
+3. Cross-check the final output against the original scope.
+4. Remove any sentence that explains missing work instead of doing the work.
 
-## Execution Process
+## When the response is too long
 
-1. **Scope** — Read the full request. Count how many distinct deliverables are expected (files, functions, sections, answers). Lock that number.
-2. **Build** — Generate every deliverable completely. No partial drafts, no "you can extend this later."
-3. **Cross-check** — Before output, re-read the original request. Compare your deliverable count against the scope count. If anything is missing, add it before responding.
-
-## Handling Long Outputs
-
-When a response approaches the token limit:
-
-- Do not compress remaining sections to squeeze them in.
-- Do not skip ahead to a conclusion.
-- Write at full quality up to a clean breakpoint (end of a function, end of a file, end of a section).
+- Do not compress the remaining sections.
+- Stop only at a clean breakpoint such as the end of a function, file, or section.
 - End with:
 
+```text
+[PAUSED - X of Y complete. Send "continue" to resume from: next section name]
 ```
-[PAUSED — X of Y complete. Send "continue" to resume from: next section name]
-```
 
-On "continue", pick up exactly where you stopped. No recap, no repetition.
+- Resume exactly from that breakpoint on the next turn.
 
-## Quick Check
+## Final check
 
-Before finalizing any response, verify:
-- No banned patterns from the list above appear anywhere in the output
-- Every item the user requested is present and finished
-- Code blocks contain actual runnable code, not descriptions of what code would do
-- Nothing was shortened to save space
+- Confirm every requested item is present.
+- Confirm code blocks contain runnable code rather than commentary.
+- Confirm no banned placeholder patterns appear anywhere in the response.
+- Confirm nothing was shortened just to save tokens.

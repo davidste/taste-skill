@@ -1,0 +1,4 @@
+interface:
+  display_name: "Taste Skill"
+  short_description: "Design polished frontend interfaces"
+  default_prompt: "Use $taste-skill to design a distinctive frontend experience that avoids generic AI UI patterns."

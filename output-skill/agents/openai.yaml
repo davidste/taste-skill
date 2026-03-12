@@ -1,0 +1,4 @@
+interface:
+  display_name: "Output Skill"
+  short_description: "Force full, placeholder-free output"
+  default_prompt: "Use $output-skill to make this deliverable complete, with no skipped sections or placeholder code."

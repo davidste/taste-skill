@@ -1,0 +1,4 @@
+interface:
+  display_name: "Redesign Skill"
+  short_description: "Upgrade an existing UI cleanly"
+  default_prompt: "Use $redesign-skill to audit this existing frontend and ship focused visual improvements without rewriting it."
